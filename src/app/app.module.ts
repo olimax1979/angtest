@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { DishdetailComponent } from './dishdetail/dishdetail.component';
 import { DishService } from './services/dish.service';
+import { PromotionService } from './services/promotion.service';
 import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
@@ -41,7 +42,7 @@ import { MenuComponent } from './menu/menu.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [DishService],
+  providers: [DishService, PromotionService],
   bootstrap: [AppComponent],
   entryComponents: [LoginComponent],
 })
