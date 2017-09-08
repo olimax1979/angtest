@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -41,7 +42,8 @@ import { MenuComponent } from './menu/menu.component';
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [DishService, PromotionService, LeaderService],
   bootstrap: [AppComponent],
