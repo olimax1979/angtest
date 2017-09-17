@@ -13,7 +13,7 @@ fxLayoutGap.xs="0">
       <h3>{{dish.name | uppercase}}</h3>
     </md-card-title>
   </md-card-header>
-  <img md-card-image src={{dish.image}} alt={{dish.name}}>
+  <img md-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
   <md-card-content>
     <p>{{dish.description}}
     </p>
@@ -37,6 +37,8 @@ fxLayoutGap.xs="0">
     <h1 md-line> {{comments.rating}} Stars </h1>
     <h1 md-line> -- {{comments.author}} {{comments.date | date}} </h1>
   </md-list-item>
+
+  <!--PREVIEW -->
   <md-list-item>
   <h1 md-line *ngIf="!(formErrors.comment)">{{ feedbackForm.get('comment').value }}</h1>
   <h1 md-line>{{ feedbackForm.get('rating').value }} Stars</h1>
