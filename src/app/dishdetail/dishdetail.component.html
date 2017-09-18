@@ -39,12 +39,15 @@ fxLayoutGap.xs="0">
   </md-list-item>
 
   <!--PREVIEW -->
-  <md-list-item>
-  <h1 md-line *ngIf="!(formErrors.comment)">{{ feedbackForm.get('comment').value }}</h1>
-  <h1 md-line>{{ feedbackForm.get('rating').value }} Stars</h1>
-  <h1 md-line *ngIf="!(formErrors.author)">--{{ feedbackForm.get('author').value }}</h1>
-  </md-list-item>
+  <div [hidden]="feedbackForm.invalid">
+			<md-list-item >
+				<span md-line> {{feedbackForm.value.comment}} </span>
+				<span md-line> {{feedbackForm.value.rating}} Stars </span>
+				<span md-line> -- {{feedbackForm.value.author}} </span>
+			</md-list-item>
+	</div>
 
+  <div *ngIf="dish">
   <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
     <p>
       <md-input-container 
@@ -74,11 +77,12 @@ fxLayoutGap.xs="0">
     </p>
 
       <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
+      <a md-button (click)="onReset()" class="background-primary text-floral-white">Reset</a>
     </form>
+	
+  </div>
 
 </md-list>
-
-
 </div>
 
 <div [hidden]="dish || errMess">

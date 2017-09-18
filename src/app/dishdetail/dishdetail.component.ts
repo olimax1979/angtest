@@ -17,6 +17,7 @@ import 'rxjs/add/operator/switchMap';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  dishcopy=null;
   dishIds: number[];
   prev: number;
   next: number;
@@ -51,8 +52,9 @@ export class DishdetailComponent implements OnInit {
       
           this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
           this.route.params
-            .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-            .subscribe(dish => { this.dish = dish, errmess => this.errMess = <any>errmess; this.setPrevNext(dish.id); });
+          .switchMap((params: Params) => { return this.dishservice.getDish(+params['id']); })
+          .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+              errmess => { this.dish = null; this.errMess = <any>errmess; });
         }
       
         setPrevNext(dishId: number) {
@@ -63,10 +65,9 @@ export class DishdetailComponent implements OnInit {
 
         createForm() {
           this.feedbackForm = this.fb.group({
-            author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+            author: ['', Validators.required, Validators.minLength(2), Validators.maxLength(25)] ,
             rating: 5,
-            comment: ['', [Validators.required] ],
-            date: this.d.toISOString(),
+            comment: ['', Validators.required] ,
           });
     
           this.feedbackForm.valueChanges
@@ -93,7 +94,12 @@ export class DishdetailComponent implements OnInit {
         }
     
         onSubmit() {
-          this.dish.comments.push(this.feedbackForm.value);
+          this.feedbackForm.value.date=new Date().toISOString();
+          console.log(this.feedbackForm.value);
+          this.dishcopy.comments.push(this.feedbackForm.value);
+          this.dishcopy.save()
+            .subscribe(dish => { this.dish = dish; console.log(this.dish); });
+          
           this.feedbackForm.reset({
             author: '',
             rating: '5',
@@ -104,6 +110,20 @@ export class DishdetailComponent implements OnInit {
           
         )
         }
+
+        onReset() {
+          this.dishcopy.comments.pop();
+          this.dishcopy.save()
+          .subscribe(dish => { this.dish = dish; console.log(this.dish); });
+          this.feedbackForm.reset({
+            author: '',
+            rating: '5',
+            comment: '',
+            date: '',
+          },
+        )
+        }
+        
 
   goBack(): void {
     this.location.back();
