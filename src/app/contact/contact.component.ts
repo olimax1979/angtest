@@ -10,7 +10,6 @@ import { expand } from '../animations/app.animation';
   styleUrls: ['./contact.component.scss'],
   host: {
     '[@flyInOut]': 'true',
-    '[@expand]': 'true',
     'style': 'display: block;'
     },
     animations: [

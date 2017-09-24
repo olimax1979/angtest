@@ -17,7 +17,6 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./dishdetail.component.scss'],
   host: {
     '[@flyInOut]': 'true',
-    '[@expand]': 'true',
     },
   animations: [
     visibility(),

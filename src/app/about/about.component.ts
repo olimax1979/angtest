@@ -12,7 +12,6 @@ import { expand } from '../animations/app.animation';
   styleUrls: ['./about.component.scss'],
   host: {
     '[@flyInOut]': 'true',
-    '[@expand]': 'true',
     'style': 'display: block;'
     },
     animations: [
