@@ -1,5 +1,6 @@
 import { AppPage } from './app.po';
 import { browser } from 'protractor';
+import { element, by } from 'protractor';
 
 describe('angtest3 App', () => {
   let page: AppPage;
@@ -31,8 +32,15 @@ describe('angtest3 App', () => {
     let newComment = page.getElement('textarea');
     newComment.sendKeys('Test Comment');
 
-    let newSubmitButton = page.getElement("button[type=submit]");
+    let newSubmitButton = page.getAllElements("button[type=submit]");
     newSubmitButton.click();
+    
+  });
+
+  it('should carry out a reset operation', () => {
+    page.navigateTo('/dishdetail/1');
+    
+    element(by.id('resetbutton')).click();
 
     browser.pause();
   });
