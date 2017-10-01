@@ -98,3 +98,13 @@ fxLayoutGap="10px">
     </form>
 </div>
 
+<div fxFlex="40" *ngIf="feedback">
+  <h3>Feedback</h3>
+  <md-list>
+    <md-list-item>
+      <h1 md-line> {{feedbackSubmitted.firstname}} </h1>
+      
+    </md-list-item>
+  </md-list>
+  </div>
+
