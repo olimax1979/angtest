@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+import { flyInOut, visibility } from '../animations/app.animation';
 import { expand } from '../animations/app.animation';
 import { FeedbackService } from '../services/feedback.service';
 
@@ -11,11 +11,12 @@ import { FeedbackService } from '../services/feedback.service';
   styleUrls: ['./contact.component.scss'],
   host: {
     '[@flyInOut]': 'true',
-    'style': 'display: block;'
+    
     },
     animations: [
       flyInOut(),
       expand(),
+      visibility(),
     ]
 })
 
@@ -23,9 +24,12 @@ export class ContactComponent implements OnInit {
   
     feedbackForm: FormGroup;
     feedback: Feedback;
-    feedbackcopy=null;
     contactType = ContactType;
-    feedbackSubmitted:Feedback[];
+    feedbackSubmitted=null;
+    isSubmitted:boolean;
+    initFeedback:boolean;
+    spinnerHidden=true;
+    visibility='shown';
     formErrors = {
       'firstname': '',
       'lastname': '',
@@ -99,12 +103,16 @@ export class ContactComponent implements OnInit {
     }
 
     onSubmit() {
-      
       this.feedback = this.feedbackForm.value;
+      this.initFeedback=true;
+      this.isSubmitted=false;
+      this.spinnerHidden=false;
+      setTimeout(() => {
       this.feedbackService.submitFeedback(this.feedback)
-      .subscribe(feedbackSubmitted => this.feedbackSubmitted = feedbackSubmitted);
-      console.log(this.feedbackSubmitted);
-
+      .subscribe(feedback => this.feedbackSubmitted = feedback);
+      console.log(this.feedbackSubmitted, this.isSubmitted=true, this.spinnerHidden=true, )
+    }, 5000);
+    
       this.feedbackForm.reset({
         firstname: '',
         lastname: '',
@@ -114,7 +122,13 @@ export class ContactComponent implements OnInit {
         contacttype: 'None',
         message: ''
       });
+      setTimeout(() => {
+      this.initFeedback=false;
+      this.isSubmitted=false;
+    }, 15000);
       
+    
+    
     }
-  
+    
   }
